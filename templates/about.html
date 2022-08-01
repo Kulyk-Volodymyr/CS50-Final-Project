@@ -1,0 +1,118 @@
+<link href="/static/index_styles.css" rel="stylesheet">
+
+
+{% extends "layout_1.html" %}
+
+{% block body %}
+
+    <div>
+        <h3>CS50's Introduction to Computer Science</h3>
+        <h2>Final Project</h2>
+        <h1><b>New buildings in Lviv</b></h1>
+        <h3>Volodymyr Kulyk, Ukraine, Lviv</h3>
+    </div>
+
+    <div class="headRow">
+        <div class="headColumn5">
+            <p>Для фінального проекту я вирішив розробити сайт з оголошеннями про продаж нерухомості
+                в новобудовах в місті Львові. На цьому сайті користувач може оглянути будинки,
+                а забудовники додавати свої об’єкти.</p>
+        </div>
+        <div class="headColumn5">
+            <p>For the final project, I decided to develop a website with ads for the sale of real estate
+                in new buildings in the city of Lviv. On this site, the user can view houses,
+                and developers can add their buildings.</p>
+        </div>
+    </div>
+
+    <div class="headRow">
+        <div class="headColumn5">
+            <p>Користувачів цього сайту можна умовно поділити на відвідувачів, забудовників, а також адміністратора.</p>
+            <p>Відвідувач може:</p>
+            <ul>
+                <li>переглядати будинки</li>
+                <li>за допомогою кнопки “Пошук” відфільтрувати їх за районом міста, кількістю кімнат в квартирі,
+                    наявністю паркінгу або комерційних приміщень, поверховістю будинку</li>
+            </ul>
+            <p>Кнопка “Додати оголошення” призначена для забудовників. Якщо забудовник ще не представлений
+                на сайті, йому потрібно спершу зареєструватися, а тоді додавати будинки.
+                Зайшовши до себе на сторінку забудовник може:</p>
+            <ul>
+                <li>редагувати дані про компанію</li>
+                <li>редагувати дані про будинок, або не відображати його на сайті</li>
+                <li>додавати нові будинки</li>
+            </ul>
+            <p>Адміністратор може:</p>
+            <ul>
+                <li>переглянути список забудовників та їх будинків</li>
+                <li>відправити листа забудовникові</li>
+                <li>заблокувати відображення будинку на головній сторінці</li>
+            </ul>
+        </div>
+        <div class="headColumn5">
+            <p>The main users of this website are potential buyers, developers and an administrator.</p>
+            <p>Visitors can:</p>
+            <ul>
+                <li>view houses</li>
+                <li>use the "Search" button to filter houses by city district, number of rooms in the apartment,
+                    availability of parking or commercial premises, number of floors in the building</li>
+            </ul>
+            <p>The "Add an ad" button is intended for developers. In order to add houses, they need to create
+                an account and log in. After registering, developers can:</p>
+            <ul>
+                <li>edit company data</li>
+                <li>edit data about houses, or hide them from being displayed on the website</li>
+                <li>add new houses</li>
+            </ul>
+            <p>Administrators can:</p>
+            <ul>
+                <li>view the list of developers and their houses</li>
+                <li>contact developers</li>
+                <li>hide the houses from being displayed on the main page</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="headRow">
+        <div class="headColumn5">
+            <p>При розробці я використав наступні технології: Python(Flask, SQLite3, Datetime, OS),
+                HTML, CSS, JavaScript. При розробці frontend частини я поставив собі мету не використовувати
+                готові бібліотеки, щоб краще повивчати зв’язок HTML і CSS. На жаль, через брак часу,
+                не встиг розробити функціонування деяких елементів (сторінки адміністратора і забудовника).
+                Щоб переглянути сторінку забудовника потрібно натиснути “Додати оголошення”, а потім “Увійти”.
+                В полі “Забудовник” потрібно ввести назву компанії (третій рядок в оголошенні) і будь-який пароль
+                (перевірку паролю не встиг розробити, хоча в базі даних передбачив це поле).
+                Щоб ввійти як адміністратор – в URL головної сторінки потрібно додати “/admin”.</p>
+
+        </div>
+        <div class="headColumn5">
+            <p>During development, I used the following technologies: Python (Flask, SQLite3, Datetime, OS),
+                HTML, CSS, JavaScript. When developing the frontend part, I set myself the goal not to use
+                pre-written libraries in order to better learn the relationship between HTML and CSS.
+                Unfortunately, due to lack of time, I was unable to develop the functioning of some elements
+                (administrator and developer pages). To view the page of the developer, you need to click
+                "Add an ad" and then "Log in". In the "Developer" field, you need to enter the name of the company
+                (the third line in the ad) and any password (I didn't have time to develop the password check,
+                although I planned this field in the database). To log in as an administrator, add “/admin”
+                to the URL of the main page.</p>
+        </div>
+    </div>
+
+    <div class="headRow">
+        <div class="headColumn5">
+            <p>Дякую кожному, хто доклав свої зусилля та час для розробки і проходження цього курсу,
+                а також надав можливість вільно його пройти!</p>
+            <p>P.S. Зараз я працюю архітектором, проте планую стати розробником в сфері інформаційних технологій.
+                <a href="/my_buildings" style="color: #0000ff; text-decoration: underline">Тут</a>
+                Ви можете побачити будинки, в проектуванні яких я брав участь.</p>
+        </div>
+        <div class="headColumn5">
+            <p>I would like to say thank you to everyone who put in their efforts and time to develop
+                and take this course, and also provided an opportunity to take this course for free!</p>
+            <p>P.S. Currently І work as an architect, but plan to  become a developer in the industry of
+                information technologies. <a href="/my_buildings" style="color: #0000ff; text-decoration: underline">Here</a> you can see the houses
+                that I co-designed.</p>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,60 @@
+/* Popup container - can be anything you want */
+.popupAdd {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+/* The actual popup */
+.popupAdd .popuptext {
+  visibility: hidden;
+  width: 300px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px 0;
+  position: absolute;
+  z-index: 1;
+  top: 125%;
+  left: 10%;
+  margin-left: -80px;
+}
+
+.popupAdd .popuptext1 {
+  visibility: hidden;
+  width: 400px;
+  min-height: 50px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px 0;
+  position: absolute;
+  z-index: 1;
+  top: -200%;
+  left: -150%;
+  margin-left: -80px;
+}
+
+.popupAdd .popuptext2 {
+  visibility: hidden;
+  width: 400px;
+  min-height: 50px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px 0;
+  position: absolute;
+  z-index: 1;
+  top: 120%;
+  left: -150%;
+  margin-left: -80px;
+}
+
+/* Toggle this class - hide and show the popup */
+.popupAdd .show {
+  visibility: visible;
+  animation: fadeIn 1s;
+}

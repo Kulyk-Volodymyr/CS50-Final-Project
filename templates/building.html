@@ -1,0 +1,193 @@
+<link href="/static/index_styles.css" rel="stylesheet">
+<link href="/static/building_styles.css" rel="stylesheet">
+<link href="/static/slideshow_styles.css" rel="stylesheet">
+
+
+{% extends "layout.html" %}
+
+{% block body %}
+
+    <div class="div1">
+        <div>
+            <h2>{{ building_data[1] }} {{ name }}</h2>
+            <p>{{ building_data[2] }} р-н, вул. {{ building_data[3] }}, {{ building_data[4] }}</p>
+        </div>
+        <div class="div2">
+            <p><b>Візуалізації:</b></p>
+            <div>
+                <div class="slideshow-container">
+                    {% for item in images[0][1] %}
+                    <div class="mySlides1">
+                        <img src="{{ images[0][0] }}{{ item }}" style="width:100%; height:600px" >
+                    </div>
+                    {% endfor %}
+                    <a class="prev" onclick="plusSlides(-1, 0)">&#10094;</a>
+                    <a class="next" onclick="plusSlides(1, 0)">&#10095;</a>
+                </div>
+            </div>
+        </div>
+        <div>
+            <p>Забудовник: <b>{{ developer[0][1] }}</b></p>
+            <p>Стан будівництва: {{ building_data[5] }} </p>
+            <p>Ціна від: <b>{{ building_data[6] }}</b> грн за кв.м</p>
+        </div>
+        <div class="div2">
+            <b><p id="selling"></p></b>
+                <script>
+                    let for_selling;
+                    if ({{ building_data[7] }} == 0) {
+                        for_selling = "Продаж завершено";
+                    } else {
+                        let available = "";
+                        if ({{ building_data[8] }} == 1) {
+                            available += "   1к";}
+                        if ({{ building_data[9] }} == 1) {
+                            available = available + "   2к";}
+                        if ({{ building_data[10] }} == 1) {
+                            available += "   3к";}
+                        if ({{ building_data[11] }} == 1) {
+                            available += "   4+к";}
+                        if ({{ building_data[12] }} == 1) {
+                            available += "   Паркінг";}
+                        if ({{ building_data[13] }} == 1) {
+                            available += "   Нежитлові приміщення";}
+                        for_selling = "Продаж:" + available;
+                        available;
+                    }
+                    document.getElementById("selling").innerHTML = for_selling;
+                </script>
+
+            <div class="headRow">
+                <div class="headColumn4"><label float="left" padding="10px">Поверховість: {{ building_data[14] }} </label></div>
+                <div class="headColumn4"><label >Технологія будівництва: {{ building_data[15] }} </label></div>
+            </div>
+            <div class="headRow"><div class="headColumn4"><label>Стіни: {{ building_data[16] }} </label></div>
+                <div class="headColumn4"><label>Утеплення: {{ building_data[17] }} </label></div>
+            </div>
+            <div class="headRow">
+                <div class="headColumn4"><label>Опалення: {{ building_data[18] }} </label></div>
+                <div class="headColumn4"><label>Висота стель: {{ building_data[19] }} м</label></div>
+            </div>
+
+            <p>{{ building_data[20] }} </p>
+
+        {% if building_data[21] == 1 %}
+            <div>
+                <p><b>{{ building_data[22] }}</b></p>
+            </div>
+        {% endif %}
+        </div>
+
+        {% if images[1][1]|length > 0 %}
+            <div class="div2">
+                <p><b>Генплан:</b></p>
+                <div>
+                    <div class="slideshow-container">
+                        {% for item in images[1][1] %}
+                        <div class="mySlides2">
+                            <img src="{{ images[1][0] }}{{ item }}" style="width:100%; height:600px">
+                        </div>
+                        {% endfor %}
+                        <a class="prev" onclick="plusSlides(-1, 1)">&#10094;</a>
+                        <a class="next" onclick="plusSlides(1, 1)">&#10095;</a>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+        {% if images[2][1]|length > 0 %}
+            <div class="div2">
+                <p><b>Плани поверхів:</b></p>
+                <div>
+                    <div class="slideshow-container">
+                        {% for item in images[2][1] %}
+                        <div class="mySlides3">
+                            <img src="{{ images[2][0] }}{{ item }}" style="width:100%; height:600px">
+                        </div>
+                        {% endfor %}
+                        <a class="prev" onclick="plusSlides(-1, 2)">&#10094;</a>
+                        <a class="next" onclick="plusSlides(1, 2)">&#10095;</a>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+        {% if images[3][1]|length > 0 %}
+            <div class="div2">
+                <p><b>Плани приміщень:</b></p>
+                <div>
+                    <div class="slideshow-container">
+                        {% for item in images[3][1] %}
+                        <div class="mySlides4">
+                            <img src="{{ images[3][0] }}{{ item }}" style="width:100%; height:600px">
+                        </div>
+                        {% endfor %}
+                        <a class="prev" onclick="plusSlides(-1, 3)">&#10094;</a>
+                        <a class="next" onclick="plusSlides(1, 3)">&#10095;</a>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+        {% if images[4][1]|length > 0 %}
+            <div class="div2">
+                <p><b>Хід будівництва:</b></p>
+                <div>
+                    <div class="slideshow-container">
+                        {% for item in images[4][1] %}
+                        <div class="mySlides5">
+                            <img src="{{ images[4][0] }}{{ item }}" style="width:100%; height:600px">
+                        </div>
+                        {% endfor %}
+                        <a class="prev" onclick="plusSlides(-1, 4)">&#10094;</a>
+                        <a class="next" onclick="plusSlides(1, 4)">&#10095;</a>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+        <div>
+            <p><b>Контакти:</b></p>
+            {% if developer[0][7] != None %}
+                <p>{{ developer[0][7] }}</p>
+            {% endif %}
+            {% if developer[0][3] != None %}
+                <p>Сайт: {{ developer[0][3] }}</p>
+            {% endif %}
+            {% if developer[0][4] != None %}
+                <p>Адреса: {{ developer[0][4] }}</p>
+            {% endif %}
+            {% if developer[0][5] != None %}
+                <p>Телефон: {{ developer[0][5] }}</p>
+            {% endif %}
+            <p>E-mail: {{ developer[0][6] }}</p>
+        </div>
+    </div>
+
+    <script>
+    let slideIndex = [1,1,1,1,1];
+    let slideId = ["mySlides1", "mySlides2", "mySlides3", "mySlides4", "mySlides5"]
+    showSlides(1, 0);
+    showSlides(1, 1);
+    showSlides(1, 2);
+    showSlides(1, 3);
+    showSlides(1, 4);
+
+    function plusSlides(n, no) {
+      showSlides(slideIndex[no] += n, no);
+    }
+
+    function showSlides(n, no) {
+      let i;
+      let x = document.getElementsByClassName(slideId[no]);
+      if (n > x.length) {slideIndex[no] = 1}
+      if (n < 1) {slideIndex[no] = x.length}
+      for (i = 0; i < x.length; i++) {
+         x[i].style.display = "none";
+      }
+      x[slideIndex[no]-1].style.display = "block";
+    }
+    </script>
+
+
+{% endblock %}

@@ -1,0 +1,56 @@
+<link href="/static/index_styles.css" rel="stylesheet">
+<link href="/static/developer_styles.css" rel="stylesheet">
+
+
+{% extends "layout_1.html" %}
+
+{% block body %}
+
+
+    <div class="div1">
+        <h2 name="current_developer">{{ developer[1] }}</h2>
+        <div class="headRow">
+            <p class="headColumn1">Про забудовника:</p>
+            <p class="headColumn1">{{ developer[7] }}</p>
+            <button class="headColumn3" style="margin: 2%">Редагувати</button>
+        </div>
+        <div class="headRow">
+            <p class="headColumn1">Адреса:</p>
+            <p class="headColumn1">{{ developer[4] }}</p>
+            <button class="headColumn3" style="margin: 2%">Редагувати</button>
+        </div>
+        <div class="headRow">
+            <p class="headColumn1">Телефон:</p>
+            <p class="headColumn1">{{ developer[5] }}</p>
+            <button class="headColumn3" style="margin: 2%">Редагувати</button>
+        </div>
+        <div class="headRow">
+            <p class="headColumn1">E-mail:</p>
+            <p class="headColumn1">{{ developer[6] }}</p>
+            <button class="headColumn3" style="margin: 2%">Редагувати</button>
+        </div>
+    </div>
+
+    <div class="div2">
+        <p>Будинки:</p>
+    </div>
+
+    {% for i in houses if houses|length > 0 %}
+        <div class="div1">
+            <div class="headRow">
+                <p class="headColumn1">{{ i[0] }}</p>
+                <button class="headColumn3" style="margin: 2%">Редагувати</button>
+                <button class="headColumn3" style="margin: 2%">Не відображати на сайті</button>
+            </div>
+        </div>
+    {% endfor %}
+
+    <div class="div2">
+        <form class="popuptext1" action="/add_building" method="post">
+            <input name="current_developer" value="{{ developer[1] }}" type="hidden" required>
+            <input type="submit" value="Додати будинок">
+        </form>
+    </div>
+
+{% endblock %}
+

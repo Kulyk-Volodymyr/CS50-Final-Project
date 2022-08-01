@@ -1,0 +1,20 @@
+<link href="/static/index_styles.css" rel="stylesheet">
+
+{% extends "layout.html" %}
+
+{% block body %}
+
+    {% for i in range(bulding_data|length) %}
+        <a href="{{ url_for('building', building = bulding_data[i][1]) }}">
+            <div class="mainDiv">
+                <img src="/static/developers_database/{{ bulding_data[i][6] }}/{{ bulding_data[i][1] }}/render/{{ main_pic }}" height="250px">
+                <h3>{{ bulding_data[i][0] }} {{ bulding_data[i][1] }}</h3>
+                <hr style="border: 1px solid #dedede;">
+                <p>{{ bulding_data[i][2] }}</p>
+                <p>{{ bulding_data[i][6] }}</p>
+                <p>від <b>{{ bulding_data[i][3] }}</b> грн за м2</p>
+            </div>
+        </a>
+    {% endfor %}
+
+{% endblock %}

@@ -1,0 +1,29 @@
+<link href="/static/index_styles.css" rel="stylesheet">
+<link href="/static/developer_styles.css" rel="stylesheet">
+
+
+{% extends "layout_1.html" %}
+
+{% block body %}
+
+    {% for i in data_list %}
+        <div class="div1">
+
+            <div class="headRow">
+                <h2 class="headColumn1">{{ i[0] }}</h2>
+                <button class="headColumn3" style="margin: 2%; width: 160px"><img src="/static/icons/mail.png" height="40" class="headColumn3">Написати</button>
+            </div>
+
+
+            {% for j in i[1] %}
+            <hr style="width:96%; height:1px; color:#e0e0e0; background-color:#e0e0e0">
+                <div class="headRow">
+                    <p class="headColumn1"><b>{{ [j][0][0] }}.</b> Додано: {{ [j][0][1][:10] }} о {{ [j][0][1][11:19] }}</p>
+                    <button class="headColumn3" style="margin: 2%; width: 160px">Заблокувати на сайті</button>
+                </div>
+            {% endfor %}
+
+        </div>
+    {% endfor %}
+
+{% endblock %}

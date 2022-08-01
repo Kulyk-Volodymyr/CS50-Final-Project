@@ -1,0 +1,93 @@
+.mainDiv {
+    width: 30%;
+    background-color: #f0f0f0;
+    text-align: left;
+    margin: 5px;
+    border-radius: 10px;
+    padding: 10px;
+    display: inline-block;
+    vertical-align: top;
+}
+
+a, a:hover, a:focus, a:active {
+      text-decoration: none;
+      color: inherit;
+}
+
+img {
+    width: 100%;
+    object-fit: contain;
+}
+
+body {
+    background-color: #5D0D0D0;
+    margin: 0;
+    font-family: "Montserrat",Arial,Helvetica,sans-serif;
+}
+
+.headFoot1 {
+    background: linear-gradient(#ffd479, #ffed87)
+}
+
+.headFoot2 {
+    /* background-color: #ffe080; */
+    margin-left: 20%;
+    width: 60%;
+    /* padding: 1rem 1rem;
+    text-align: center; */
+}
+
+.headRow:after {
+    content: "";
+    display: table;
+    clear: both;
+    position: relative;
+}
+
+.headColumn1 {
+    float: left;
+    padding: 10px;
+    /* height: 300px;  Should be removed. Only for demonstration
+    width: 33.33%; */
+}
+
+.headColumn2 {
+    float: right;
+    padding: 10px;
+    position: relative;
+    top: 50px;
+    left: 5px;
+    /* height: 300px; Should be removed. Only for demonstration
+    width: 20%;*/
+}
+
+.headColumn3 {
+    float: right;
+    position: relative;
+    /* height: 300px; Should be removed. Only for demonstration
+    width: 20%;*/
+}
+
+.headColumn4 {
+    float: right;
+    position: relative;
+    width: 50%;
+    /* height: 300px; Should be removed. Only for demonstration
+    width: 20%;*/
+}
+
+.headColumn5 {
+    float: right;
+    position: relative;
+    width: 46%;
+    padding: 0% 2%;
+    text-align: left;
+    /* height: 300px; Should be removed. Only for demonstration
+    width: 20%;*/
+}
+
+.page {
+    padding-right: 20%;
+    padding-left: 20%;
+    text-align: center;
+}

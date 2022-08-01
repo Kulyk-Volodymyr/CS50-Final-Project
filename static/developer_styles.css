@@ -1,0 +1,12 @@
+.div1 {
+  border: 2px outset #e0e0e0;
+  background-color: #f0f0f0;
+  text-align: center;
+  margin: 5px;
+  border-radius: 10px;
+}
+
+.div2 {
+  text-align: center;
+  margin: 5px;
+}

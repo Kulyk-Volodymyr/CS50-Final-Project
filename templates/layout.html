@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+
+<html lang="uk">
+    <head>
+        <meta name="viewport" content="initial-scale=1, width=device-width">
+        <link href="/static/index_styles.css" rel="stylesheet">
+        <link href="/static/popup_styles.css" rel="stylesheet">
+        <script src="/static/popup_icons.js"></script>
+        <link href="/static/popup_add_styles.css" rel="stylesheet">
+        <script src="/static/popup_add.js"></script>
+        <link href="/static/popup_search_styles.css" rel="stylesheet">
+        <link href="/static/search_styles.css" rel="stylesheet">
+        <title>Новобудови Львова</title>
+        <link rel="icon" type="image/x-icon" href="/static/icons/main.png">
+    </head>
+    <body>
+        <div class="headFoot1">
+            <div class="headFoot2">
+                <div class="headRow">
+                    <a href="{{ url_for('index') }}">
+                        <div class="headColumn1">
+                            <div class="headRow">
+                                <div class="headColumn1">
+                                    <img src="/static/icons/main.png" height="70" class="headColumn1">
+                                </div>
+                                <h1 class="headColumn3">Новобудови<br>Львова</h1>
+                            </div>
+                        </div>
+                    </a>
+                    <div class="headColumn2" style="vertical-align: bottom;">
+                        <div class="headRow">
+                            <div class="popupAdd" onclick="myFunctionAdd()">
+                                <div class="headColumn1">
+                                    <img src="/static/icons/add.png" height="20" class="headColumn1">
+                                </div>
+                                    <h2 class="headColumn3">Додати оголошення</h2>
+                                <span class="popuptext" id="myPopupAdd">Щоб додати оголошення потрібно<br>
+                                    <button class="popupAdd" onclick="myFunctionEnter()">Увійти
+                                        <form class="popuptext1" id="myPopupEnter" action="/developer_exist" method="post">
+                                            <input autocomplete="off" name="title" type="text" placeholder="Забудовник"  required>
+                                            <input autocomplete="off" name="pword" type="password" placeholder="Пароль"  required>
+                                            <input type="submit">
+                                        </form>
+                                    </button>
+                                    або
+                                    <button class="popupAdd" onclick="myFunctionRegister()">Зареєструватися
+                                        <form class="popuptext1" id="myPopupRegister" action="/developer_new" method="post">
+                                            <input style="float: left; width: 100%;" name="title" autocomplete="off" type="text" placeholder="Забудовник"  required>
+                                            <input style="float: left; width: 100%;" name="phone" autocomplete="off" type="text" placeholder="Телефон"  required>
+                                            <input style="float: left; width: 100%;" name="email" autocomplete="off" type="text" placeholder="E-mail"  required>
+                                            <input style="float: left; width: 100%;" name="password" autocomplete="off" type="password" placeholder="Пароль"  required>
+                                            <input type="submit">
+                                        </form>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="headColumn2">
+                        <div class="headRow">
+                            <div class="popupSearch" onclick="myFunctionSearch()">
+                                <div class="headColumn1">
+                                    <img src="/static/icons/search.png" height="20" class="headColumn1">
+                                </div>
+                                <h2 class="headColumn3">Пошук</h2>
+                                <form class="popuptext2" id="myPopupSearch" action="/search_results" method="post">
+                                    <div width="430px" style="text-align:left">
+                                        <label style="margin-left:10px">Район:</label><br>
+                                        <ul>
+                                            <li>
+                                                <input type="checkbox" id="district1" name="district1" value="1">
+                                                <label for="district1"> Галицький</label>
+                                            </li><li>
+                                                <input type="checkbox" id="district2" name="district2" value="1">
+                                                <label for="district2"> Залізничний</label>
+                                            </li><li>
+                                                <input type="checkbox" id="district3" name="district3" value="1">
+                                                <label for="district3"> Личаківський</label><br>
+                                            </li><li>
+                                                <input type="checkbox" id="district4" name="district4" value="1">
+                                                <label for="district4"> Сихівський</label>
+                                            </li><li>
+                                                <input type="checkbox" id="district5" name="district5" value="1">
+                                                <label for="district5"> Франківський</label>
+                                            </li><li>
+                                                <input type="checkbox" id="district6" name="district6" value="1">
+                                                <label for="district6"> Шевченківський</label>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div width="430px" style="text-align:left">
+                                        <label style="margin-left:10px">Наявні:</label><br>
+                                        <ul>
+                                            <li>
+                                                <input type="checkbox" id="rooms1" name="rooms1" value="1">
+                                                <label for="rooms1"> 1к</label>
+                                            </li><li>
+                                                <input type="checkbox" id="rooms2" name="rooms2" value="1">
+                                                <label for="rooms2"> 2к</label>
+                                            </li><li>
+                                                <input type="checkbox" id="rooms3" name="rooms3" value="1">
+                                                <label for="rooms3"> 3к</label>
+                                            </li><li>
+                                                <input type="checkbox" id="rooms4" name="rooms4" value="1">
+                                                <label for="rooms4"> 4+к</label>
+                                            </li>
+                                        </ul><ul>
+                                            <li>
+                                                <input type="checkbox" id="rooms5" name="rooms5" value="1">
+                                                <label for="rooms5"> Паркінг</label>
+                                            </li><li>
+                                                <input type="checkbox" id="rooms6" name="rooms6" value="1">
+                                                <label for="rooms6"> Нежитлові приміщення</label>
+                                            </li>
+                                        </ul>
+                                    </div><br><br>
+                                    <div width="430px" style="text-align:left; float:left">
+                                        <label style="margin-left:10px">Поверховість:</label><br>
+                                        <ul>
+                                            <li>
+                                                <input type="checkbox" id="floors1" name="floors1" value="1">
+                                                <label for="floors1"> <6</label>
+                                            </li><li>
+                                                <input type="checkbox" id="floors2" name="floors2" value="1">
+                                                <label for="floors2"> 6-9</label>
+                                            </li><li>
+                                                <input type="checkbox" id="floors3" name="floors3" value="1">
+                                                <label for="floors3"> 10-16</label>
+                                            </li><li>
+                                                <input type="checkbox" id="floors4" name="floors4" value="1">
+                                                <label for="floors4"> >16</label>
+                                            </li>
+                                        </ul>
+                                    </div><br><br><br><br><br><br>
+
+                                        <input type="submit" style="height:40px">
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <div class="page">
+                {% block body %}{% endblock %}
+            </div>
+        </div>
+
+        <div class="headFoot1">
+            <div class="headFoot2">
+                <div class="headRow">
+                    <div class="headColumn1">
+                        <div class="headColumn1">
+                            <div class="headRow">
+                                <a href="{{ url_for('index') }}">
+                                    <div class="headColumn1">
+                                        <img src="/static/icons/main.png" height="80" class="headColumn1">
+                                    </div>
+                                    <h3 class="headColumn3">Новобудови<br>Львова</h3>
+                                </a>
+                                <a href="{{ url_for('about') }}">
+                                    <h4>Про сайт</h4>
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="headColumn2" style="vertical-align: bottom; margin:-20px 1px">
+                        <h3>Зв'яжіться з нами:</h3>
+                        <div class="headRow">
+                            <div class="headColumn3">
+                                <div class="popup" onclick="myFunction5()">
+                                    <img src="/static/icons/mail.png" height="50" class="headColumn1" style="vertical-align:top; float:right; margin:-10px 10px">
+                                  <span class="popuptext" id="myPopup5">mail@gmail.com</span>
+                                </div>
+                            </div>
+                            <div class="headColumn3">
+                                <div class="popup" onclick="myFunction4()">
+                                    <img src="/static/icons/phone.png" height="50" class="headColumn1" style="vertical-align:top; margin:-10px 10px">
+                                  <span class="popuptext" id="myPopup4">+380 (050) 100-00-00<br>+380 (067) 100-00-00</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="headColumn2" style="vertical-align: bottom; margin:-20px 1px">
+                        <h3>Стежте за нами:</h3>
+                        <div class="headRow">
+                            <div class="headColumn3">
+                                <div class="popup" onclick="myFunction3()">
+                                    <img src="/static/icons/telegram.png" height="50" class="headColumn1" style="vertical-align:top; float:right; margin:-10px 10px">
+                                  <span class="popuptext" id="myPopup3">Незабаром!</span>
+                                </div>
+                            </div>
+
+                            <div class="headColumn3">
+                                <div class="popup" onclick="myFunction1()">
+                                    <img src="/static/icons/facebook.png" height="50" class="headColumn1" style="vertical-align:top; margin:-10px 10px">
+                                  <span class="popuptext" id="myPopup1">Незабаром!</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>

@@ -1,0 +1,133 @@
+<link href="/static/index_styles.css" rel="stylesheet">
+<link href="/static/developer_styles.css" rel="stylesheet">
+
+
+{% extends "layout_1.html" %}
+
+{% block body %}
+
+    <div class="div1"><form><h2>{{ developer }}</h2></form></div>
+
+    <form action="/building_added" method="post" enctype="multipart/form-data">
+        <div class="div1">
+            <input name="current_developer" value="{{ developer }}" type="hidden" required><br>
+
+            <label for="building_title">Назва будинку:</label>
+            <input type="text" id="building_title" name="building_title" required>
+
+            <input type="radio" id="zb" name="building_type" value="ЖБ" checked="checked">
+            <label for="zb">ЖБ</label>
+            <input type="radio" id="zk" name="building_type" value="ЖК">
+            <label for="zk">ЖК</label><br><br>
+
+            <label for="district">Район:</label>
+            <select id="district" name="district">
+                <option value="Галицький" selected>Галицький</option>
+                <option value="Залізничний">Залізничний</option>
+                <option value="Личаківський">Личаківський</option>
+                <option value="Сихівський">Сихівський</option>
+                <option value="Франківський">Франківський</option>
+                <option value="Шевченківський">Шевченківський</option>
+            </select>
+
+            <label for="street">Вулиця:</label>
+            <input type="text" id="street" name="street" required>
+            <label for="street_number">Номер будинку:</label>
+            <input type="text" id="street_number" name="street_number" required><br><br>
+
+            <label for="status">Стан будівництва:</label>
+            <select id="status" name="status">
+                <option value="проект" selected>проект</option>
+                <option value="підготовчі роботи">підготовчі роботи</option>
+                <option value="будується">будується</option>
+                <option value="зданий">зданий</option>
+            </select>
+
+            <label for="price">Ціна від:</label>
+            <input type="text" id="price" name="price" placeholder="12 345" required>
+            <label for="price">грн за кв.м</label><br><br>
+
+            <label>Продаж</label>
+            <input type="radio" id="sTrue" name="selling" value=1 checked="checked">
+            <label for="sTrue">триває, або</label>
+            <input type="radio" id="sFalse" name="selling" value=0>
+            <label for="sFalse">завершено</label><br><br>
+        </div>
+        <div class="div1">
+            <br><label for="room1">Доступні квартири:</label>
+            <input type="checkbox" name="room1" value='1'>
+            <label for="room1">1к</label>
+            <input type="checkbox" name="room2" value='1'>
+            <label for="room2">2к</label>
+            <input type="checkbox" name="room3" value='1'>
+            <label for="room3">3к</label>
+            <input type="checkbox" name="room4" value='1'>
+            <label for="room4">4+к;</label>
+            <input type="checkbox" name="parking" value='1'>
+            <label for="parking">паркінг;</label>
+            <input type="checkbox" name="commercial" value='1'>
+            <label for="commercial">нежитлові приміщення</label><br><br>
+
+            <label for="floor_qty">Поверховість:</label>
+            <input type="text" id="floor_qty" name="floor_qty" placeholder="10" required>
+            <label for="room_height">Висота стель:</label>
+            <input type="text" id="room_height" name="room_height" placeholder="2.7" required>
+            <label for="room_height">м</label><br><br>
+
+            <label for="technology">Технологія будівництва:</label>
+            <select id="technology" name="technology">
+                <option value="каркас" selected>каркас</option>
+                <option value="несучі стіни">несучі стіни</option>
+            </select>
+
+            <label for="walls">Стіни:</label>
+            <select id="walls" name="walls">
+                <option value="монолітний залізобетон" selected>монолітний залізобетон</option>
+                <option value="цегла">цегла</option>
+                <option value="керамоблок">керамоблок</option>
+                <option value="газоблок">газоблок</option>
+            </select>
+
+            <label for="insulation">Утеплення:</label>
+            <select id="insulation" name="insulation">
+                <option value="мінеральна вата" selected>мінеральна вата</option>
+                <option value="пінополістирол">пінополістирол</option>
+            </select>
+
+            <label for="heating">Опалення:</label>
+            <select id="heating" name="heating">
+                <option value="індивідуальне" selected>індивідуальне</option>
+                <option value="власна котельня">власна котельня</option>
+                <option value="централізоване">централізоване</option>
+            </select><br><br>
+
+        </div>
+        <div class="div1">
+            <br><label for="description">Про будинок:</label><br><br>
+            <input style="width: 80%" type="text" id="description" name="description" placeholder="Тут можна додати опис будинку."><br><br>
+            <label for="sale_description">Акція:</label><br><br>
+            <input style="width: 80%" type="text" id="sale_description" name="sale_description" placeholder="Акції при купівлі, якщо є."><br><br>
+        </div>
+        <div class="div1">
+            <br><label for="renders">Додати рендери:</label>
+            <input type="file" name="renders" id="renders" multiple="multiple"><br><br>
+
+            <br><label for="floor_plans">Додати плани поверхів:</label>
+            <input type="file" name="floor_plans" id="floor_plans" multiple="multiple"><br><br>
+
+            <br><label for="apartment_plans">Додати плани квартир:</label>
+            <input type="file" name="apartment_plans" id="apartment_plans" multiple="multiple"><br><br>
+
+            <br><label for="masterplans">Додати генплан:</label>
+            <input type="file" name="masterplans" id="masterplans" multiple="multiple"><br><br>
+
+            <br><label for="progres">Додати хід будівництва:</label>
+            <input type="file" name="progres" id="progres" multiple="multiple"><br><br>
+        </div>
+
+
+        <input type="submit" value="Додати будинок">
+
+    </form>
+
+{% endblock %}
