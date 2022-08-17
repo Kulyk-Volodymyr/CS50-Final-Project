@@ -58,3 +58,34 @@
   visibility: visible;
   animation: fadeIn 1s;
 }
+
+
+/* Popup container - can be anything you want */
+.popupMail {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+/* The actual popup */
+.popupMail .popuptext {
+  visibility: hidden;
+  width: 740px;
+  background-color: #A0A0A0;
+  color: #000;
+  text-align: center;
+  border: 2px outset #e0e0e0;
+  border-radius: 6px;
+  padding: 8px;
+  position: absolute;
+  z-index: 1;
+  top: 150%;
+  left: 20%;
+  margin-left: -320px;
+}
+
+/* Toggle this class - hide and show the popup */
+.popupMail .show {
+  visibility: visible;
+  animation: fadeIn 1s;
+}
