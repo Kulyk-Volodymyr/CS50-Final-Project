@@ -6,7 +6,6 @@
 
 {% block body %}
 
-
     <div class="div1">
         <h2 name="current_developer">{{ developer[1] }}</h2>
         <div class="headRow">
@@ -40,7 +39,25 @@
             <div class="headRow">
                 <p class="headColumn1">{{ i[0] }}</p>
                 <button class="headColumn3" style="margin: 2%">Редагувати</button>
-                <button class="headColumn3" style="margin: 2%">Не відображати на сайті</button>
+                {% if i[1] == 1 and i[2] == 0 %}
+                    <div class="headColumn3" style="margin: 2%">
+                        <form action="/hide_by_developer" method="post">
+                            <input name="current_building1" value="{{ i[0] }}" type="hidden" required>
+                            <input type="submit" value="Не відображати на сайті">
+                        </form>
+                    </div>
+                {% endif %}
+                {% if i[1] == 0 and i[2] == 0 %}
+                    <div class="headColumn3" style="margin: 2%">
+                        <form action="/show_by_developer" method="post">
+                            <input name="current_building2" value="{{ i[0] }}" type="hidden" required>
+                            <input type="submit" value="Повернути на сайт">
+                        </form>
+                    </div>
+                {% endif %}
+                {% if i[2] == 1 %}
+                    <b class="headColumn3" style="margin: 2%">Заблоковано адміністрацією сайту</b>
+                {% endif %}
             </div>
         </div>
     {% endfor %}
@@ -53,4 +70,3 @@
     </div>
 
 {% endblock %}
-
