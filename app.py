@@ -10,13 +10,12 @@ app = Flask(__name__)
 def index():
     with sqlite3.connect('database.db') as db:
         cursor = db.cursor()
-        query1 = """ SELECT building_data_info.BuildingType, buildings.Name, building_data_info.District,
-                building_data_info.Price, building_data_info.Sale, building_data_info.Selling FROM building_data_info
+        query1 = """ SELECT building_data_info.BuildingType, buildings.Name, building_data_info.District, 
+                building_data_info.Price, building_data_info.Sale, building_data_info.Selling FROM building_data_info 
                 JOIN buildings ON building_data_info.BuildingID = buildings.id
                 WHERE buildings.AvailableOnMainPage = '1' AND buildings.BlockedByAdmin = '0'"""
         cursor.execute(query1)
         building_data = cursor.fetchall()
-        # print(building_data)
         building_data.reverse()
     with sqlite3.connect('database.db') as db:
         cursor = db.cursor()
@@ -26,51 +25,45 @@ def index():
         cursor.execute(query2)
         developer_title = cursor.fetchall()
         developer_title.reverse()
-    main_pic = os.listdir(os.path.dirname(__file__) + "/static/developers_database/"
-                          + developer_title[0][0] + "/" + building_data[0][1] + "/render/")[0]
+    main_pic = os.listdir(os.path.dirname(__file__) + "\\static\\developers_database\\"
+                          + developer_title[0][0] + "\\" + building_data[0][1] + "\\render\\")[0]
     return render_template("index.html", bulding_data=building_data, developer_title=developer_title, main_pic=main_pic)
-
-
 
 @app.route("/building/", methods=['GET', 'POST'])
 def building():
     if request.method == 'POST':
         return redirect(url_for('index'))
 
-
     house = request.args.get("building")
     with sqlite3.connect('database.db') as db:
         cursor = db.cursor()
-        query1 = f""" SELECT* FROM building_data_info JOIN buildings ON building_data_info.BuildingID = buildings.id
+        query1 = f""" SELECT* FROM building_data_info JOIN buildings ON building_data_info.BuildingID = buildings.id 
                 WHERE buildings.name = '{house}' """
         cursor.execute(query1)
     house_data = cursor.fetchone()
     with sqlite3.connect('database.db') as db:
         cursor = db.cursor()
-        query2 = f""" SELECT developer_data.* FROM developer_data JOIN buildings
+        query2 = f""" SELECT developer_data.* FROM developer_data JOIN buildings 
         ON developer_data.DeveloperID = buildings.DeveloperID WHERE buildings.name = '{house}' """
         cursor.execute(query2)
     developer = cursor.fetchall()
-    # print(developer[0][1], house)
 
     images = [
-        ["/static/developers_database/" + developer[0][1] + "/" + house + "/render/",
-         os.listdir(os.path.dirname(__file__) + "/static/developers_database/" + developer[0][1] +
-                    "/" + house + "/render/")],
-        ["/static/developers_databas/" + developer[0][1] + "/" + house + "/masterplan/",
-         os.listdir(os.path.dirname(__file__) + "/static/developers_database/" + developer[0][1] +
-                    "/" + house + "/masterplan/")],
-        ["/static/developers_database/" + developer[0][1] + "/" + house + "/floor plan/",
-         os.listdir(os.path.dirname(__file__) + "/static/developers_database/" + developer[0][1] +
-                    "/" + house + "/floor plan/")],
-        ["/static/developers_database/" + developer[0][1] + "/" + house + "/apartment plan/",
-         os.listdir(os.path.dirname(__file__) + "/static/developers_database/" + developer[0][1] +
-                    "/" + house + "/apartment plan/")],
-        ["/static/developers_database/" + developer[0][1] + "/" + house + "/progress/",
-         os.listdir(os.path.dirname(__file__) + "/static/developers_database/" + developer[0][1] +
-                    "/" + house + "/progress/")],]
-    # print(images[0][0], images[0][1][0])
-    # print(images[0][1])
+        ["\\static\\developers_database\\" + developer[0][1] + "\\" + house + "\\render\\",
+         os.listdir(os.path.dirname(__file__) + "\\static\\developers_database\\" + developer[0][1] +
+                    "\\" + house + "\\render\\")],
+        ["\\static\\developers_database\\" + developer[0][1] + "\\" + house + "\\masterplan\\",
+         os.listdir(os.path.dirname(__file__) + "\\static\\developers_database\\" + developer[0][1] +
+                    "\\" + house + "\\masterplan\\")],
+        ["\\static\\developers_database\\" + developer[0][1] + "\\" + house + "\\floor plan\\",
+         os.listdir(os.path.dirname(__file__) + "\\static\\developers_database\\" + developer[0][1] +
+                    "\\" + house + "\\floor plan\\")],
+        ["\\static\\developers_database\\" + developer[0][1] + "\\" + house + "\\apartment plan\\",
+         os.listdir(os.path.dirname(__file__) + "\\static\\developers_database\\" + developer[0][1] +
+                    "\\" + house + "\\apartment plan\\")],
+        ["\\static\\developers_database\\" + developer[0][1] + "\\" + house + "\\progress\\",
+         os.listdir(os.path.dirname(__file__) + "\\static\\developers_database\\" + developer[0][1] +
+                    "\\" + house + "\\progress\\")],]
 
     return render_template("building.html", name=house, building_data=house_data, developer=developer, images=images )
 
@@ -78,20 +71,20 @@ def building():
 def admin():
     with sqlite3.connect('database.db') as db:
         cursor = db.cursor()
-        query = f""" SELECT Name FROM developer_data """
+        query = f""" SELECT Name, Email FROM developer_data """
         cursor.execute(query)
     developers = cursor.fetchall()
     buildings_list = []
     for i in range(len(developers)):
         with sqlite3.connect('database.db') as db:
             cursor = db.cursor()
-            query = f""" SELECT buildings.Name, buildings.SubmissionDate FROM buildings
-            JOIN developer_data ON buildings.DeveloperID = developer_data.DeveloperID
+            query = f""" SELECT buildings.Name, buildings.SubmissionDate, buildings.BlockedByAdmin FROM buildings 
+            JOIN developer_data ON buildings.DeveloperID = developer_data.DeveloperID 
             WHERE developer_data.Name  = '{developers[i][0]}'"""
             cursor.execute(query)
         houses = cursor.fetchall()
-        print(houses)
-        buildings_list.append([developers[i][0], houses])
+        buildings_list.append([developers[i][0], houses, developers[i][1]])
+    print(buildings_list)
     return render_template("admin.html", data_list=buildings_list)
 
 @app.route("/about")
@@ -100,7 +93,6 @@ def about():
 
 @app.route("/developer_exist", methods=["GET", "POST"])
 def developer():
-
     title = request.form.get("title")
     password = request.form.get("pword")
     with sqlite3.connect('database.db') as db:
@@ -110,8 +102,8 @@ def developer():
     developer = cursor.fetchone()
     with sqlite3.connect('database.db') as db:
         cursor = db.cursor()
-        query1 = f""" SELECT buildings.Name FROM buildings JOIN developer_data
-        ON buildings.DeveloperID = developer_data.DeveloperID
+        query1 = f""" SELECT buildings.Name, buildings.AvailableOnMainPage, buildings.BlockedByAdmin FROM buildings JOIN developer_data 
+        ON buildings.DeveloperID = developer_data.DeveloperID 
         WHERE developer_data.Name  = '{title}' """
         cursor.execute(query1)
     houses = cursor.fetchall()
@@ -120,12 +112,11 @@ def developer():
 
 @app.route("/developer_new", methods=["GET", "POST"])
 def developer_add():
-
     title = request.form.get("title")
     phone = request.form.get("phone")
     email = request.form.get("email")
     password = request.form.get("password")
-
+    
     print(title, phone, email, password)
     developer = ['', title, '', '', '', phone, email,]
     developer_new = ( title, password, phone, email)
@@ -134,7 +125,7 @@ def developer_add():
         query = """ INSERT INTO developer_data (Name, Password, PhoneNumber, Email) VALUES(?,?,?,?) """
         cursor.execute(query, developer_new)
         db.commit()
-    os.makedirs(os.path.dirname(__file__) + "/static/developers_database/" '/' + title)
+    os.makedirs(os.path.dirname(__file__) + "\\static\\developers_database\\" '\\' + title)
 
     return render_template("developer.html", developer=developer, houses=[])
 
@@ -144,7 +135,6 @@ def add_building():
     developer = request.form.get("current_developer")
     print(developer)
     return render_template("add_building.html", developer=developer)
-
 
 @app.route("/building_added", methods=["GET", "POST"])
 def building_added():
@@ -162,7 +152,7 @@ def building_added():
     with sqlite3.connect('database.db') as db:
         cursor = db.cursor()
         query2 = """ INSERT INTO buildings (
-                Name, DeveloperID, SubmissionDate, AvailableOnMainPage, BlockedByAdmin)
+                Name, DeveloperID, SubmissionDate, AvailableOnMainPage, BlockedByAdmin) 
                 VALUES(?,?,?,?,?) """
         cursor.execute(query2, buildings_data)
         db.commit()
@@ -199,35 +189,35 @@ def building_added():
     with sqlite3.connect('database.db') as db:
         cursor = db.cursor()
         query3 = """ INSERT INTO building_data_info (
-                BuildingType, District, Street, StreetNumber, Status, Price, Selling,
-                Room1, Rooms2, Rooms3, Rooms4, Parking, Commercial, NumberOfFloors,
-                Technology, Walls, Insulation, Heating, RoomHeight, Description, Sale, SaleDescription)
+                BuildingType, District, Street, StreetNumber, Status, Price, Selling, 
+                Room1, Rooms2, Rooms3, Rooms4, Parking, Commercial, NumberOfFloors, 
+                Technology, Walls, Insulation, Heating, RoomHeight, Description, Sale, SaleDescription) 
                 VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) """
         cursor.execute(query3, buildings_info)
         db.commit()
 
     """ Create folders for images. """
     for i in ('render', 'floor plan', 'apartment plan', 'masterplan', 'progress'):
-        os.makedirs(os.path.dirname(__file__) + "/static/developers_database/" + dev_name +
-                    '/' + buildingsName + '/' + i)
+        os.makedirs(os.path.dirname(__file__) + "\\static\\developers_database\\" + dev_name +
+                    '\\' + buildingsName + '\\' + i)
 
     """ Add images to folders."""
     if request.files:
         for image in request.files.getlist("renders"):
-            image.save(os.path.join(os.path.dirname(__file__) + "/static/developers_database/" + dev_name + '/'
-                                    + buildingsName + '/render', image.filename))
+            image.save(os.path.join(os.path.dirname(__file__) + "\\static\\developers_database\\" + dev_name + '\\'
+                                    + buildingsName + '\\render', image.filename))
         for image in request.files.getlist("floor_plans"):
-            image.save(os.path.join(os.path.dirname(__file__) + "/static/developers_database/" + dev_name + '/'
-                                    + buildingsName + '/floor plan', image.filename))
+            image.save(os.path.join(os.path.dirname(__file__) + "\\static\\developers_database\\" + dev_name + '\\'
+                                    + buildingsName + '\\floor plan', image.filename))
         for image in request.files.getlist("apartment_plans"):
-            image.save(os.path.join(os.path.dirname(__file__) + "/static/developers_database/" + dev_name + '/'
-                                    + buildingsName + '/apartment plan', image.filename))
+            image.save(os.path.join(os.path.dirname(__file__) + "\\static\\developers_database\\" + dev_name + '\\'
+                                    + buildingsName + '\\apartment plan', image.filename))
         for image in request.files.getlist("masterplans"):
-            image.save(os.path.join(os.path.dirname(__file__) + "/static/developers_database/" + dev_name + '/'
-                                    + buildingsName + '/masterplan', image.filename))
+            image.save(os.path.join(os.path.dirname(__file__) + "\\static\\developers_database\\" + dev_name + '\\'
+                                    + buildingsName + '\\masterplan', image.filename))
         for image in request.files.getlist("progres"):
-            image.save(os.path.join(os.path.dirname(__file__) + "/static/developers_database/" + dev_name + '/'
-                                    + buildingsName + '/progress', image.filename))
+            image.save(os.path.join(os.path.dirname(__file__) + "\\static\\developers_database\\" + dev_name + '\\'
+                                    + buildingsName + '\\progress', image.filename))
 
     return render_template("building_added.html")
 
@@ -235,8 +225,8 @@ def building_added():
 def search():
     with sqlite3.connect('database.db') as db:
         cursor = db.cursor()
-        query = """ SELECT buildings.Name, building_data_info.District, building_data_info.Room1,
-        building_data_info.Rooms2, building_data_info.Rooms3, building_data_info.Rooms4,
+        query = """ SELECT buildings.Name, building_data_info.District, building_data_info.Room1, 
+        building_data_info.Rooms2, building_data_info.Rooms3, building_data_info.Rooms4, 
         building_data_info.Parking, building_data_info.Commercial, building_data_info.NumberOfFloors
         FROM building_data_info JOIN buildings ON building_data_info.BuildingID = buildings.id
         WHERE buildings.AvailableOnMainPage = '1' AND buildings.BlockedByAdmin = '0'"""
@@ -354,9 +344,6 @@ def search():
                 return render_template("no_results.html")
             else:
                 buildings_by_floors = all_buildings
-    # print(buildings_by_district)
-    # print(buildings_by_rooms)
-    # print(buildings_by_floors)
 
     buildings_for_search = []
     for i in all_buildings:
@@ -366,9 +353,9 @@ def search():
     if len(buildings_for_search) > 0:
         with sqlite3.connect('database.db') as db:
             cursor = db.cursor()
-            query = """ SELECT building_data_info.BuildingType, buildings.Name, building_data_info.District,
-                    building_data_info.Price, building_data_info.Sale, building_data_info.Selling, developer_data.Name
-                    FROM building_data_info
+            query = """ SELECT building_data_info.BuildingType, buildings.Name, building_data_info.District, 
+                    building_data_info.Price, building_data_info.Sale, building_data_info.Selling, developer_data.Name 
+                    FROM building_data_info 
                     JOIN buildings ON building_data_info.BuildingID = buildings.id
                     JOIN developer_data ON developer_data.DeveloperID = buildings.DeveloperID
                     WHERE buildings.AvailableOnMainPage = '1' AND buildings.BlockedByAdmin = '0'"""
@@ -380,8 +367,8 @@ def search():
             if j[1] in buildings_for_search: buildings_list.append(j)
         # print(buildings_list)
         buildings_list.reverse()
-        main_pic = os.listdir(os.path.dirname(__file__) + "/static/developers_database/"
-                              + buildings_list[0][6] + "/" + buildings_list[0][1] + "/render/")[0]
+        main_pic = os.listdir(os.path.dirname(__file__) + "\\static\\developers_database\\"
+                              + buildings_list[0][6] + "\\" + buildings_list[0][1] + "\\render\\")[0]
         return render_template("search_results.html", bulding_data=buildings_list, main_pic=main_pic)
     else:
         return render_template("no_results.html")
@@ -392,9 +379,9 @@ def my_buildings():
                       'Манастирського', 'Софіївка', 'Globus Elite 2', 'Софіївка 2']
     with sqlite3.connect('database.db') as db:
         cursor = db.cursor()
-        query = """ SELECT building_data_info.BuildingType, buildings.Name, building_data_info.District,
-                building_data_info.Price, building_data_info.Sale, building_data_info.Selling, developer_data.Name
-                FROM building_data_info
+        query = """ SELECT building_data_info.BuildingType, buildings.Name, building_data_info.District, 
+                building_data_info.Price, building_data_info.Sale, building_data_info.Selling, developer_data.Name 
+                FROM building_data_info 
                 JOIN buildings ON building_data_info.BuildingID = buildings.id
                 JOIN developer_data ON developer_data.DeveloperID = buildings.DeveloperID
                 WHERE buildings.AvailableOnMainPage = '1' AND buildings.BlockedByAdmin = '0'"""
@@ -404,9 +391,130 @@ def my_buildings():
     for i in buildings_data:
         if i[1] in buildings_mine: buildings_list.append(i)
     buildings_list.reverse()
-    main_pic = os.listdir(os.path.dirname(__file__) + "/static/developers_database/"
-                          + buildings_list[0][6] + "/" + buildings_list[0][1] + "/render/")[0]
+    main_pic = os.listdir(os.path.dirname(__file__) + "\\static\\developers_database\\"
+                          + buildings_list[0][6] + "\\" + buildings_list[0][1] + "\\render\\")[0]
     return render_template("search_results.html", bulding_data=buildings_list, main_pic=main_pic)
+
+@app.route("/hide_by_developer", methods=["GET", "POST"])
+def hide_by_developer():
+    current_building = request.form.get("current_building1")
+
+    with sqlite3.connect('database.db') as db:
+        cursor = db.cursor()
+        query5 = f""" UPDATE buildings SET AvailableOnMainPage = 0 WHERE name = '{current_building}' """
+        cursor.execute(query5)
+        db.commit()
+
+    with sqlite3.connect('database.db') as db:
+        cursor = db.cursor()
+        query4 = f""" SELECT developer_data.Name FROM developer_data JOIN buildings 
+        ON buildings.DeveloperID = developer_data.DeveloperID 
+        WHERE buildings.Name = '{current_building}' """
+        cursor.execute(query4)
+    title = cursor.fetchone()[0]
+
+    with sqlite3.connect('database.db') as db:
+        cursor = db.cursor()
+        query = f""" SELECT * FROM developer_data WHERE Name = '{title}' """
+        cursor.execute(query)
+    developer = cursor.fetchone()
+    with sqlite3.connect('database.db') as db:
+        cursor = db.cursor()
+        query1 = f""" SELECT buildings.Name, buildings.AvailableOnMainPage, buildings.BlockedByAdmin FROM buildings JOIN developer_data 
+        ON buildings.DeveloperID = developer_data.DeveloperID 
+        WHERE developer_data.Name  = '{title}' """
+        cursor.execute(query1)
+    houses = cursor.fetchall()
+
+    return render_template("developer.html", developer=developer, houses=houses)
+
+@app.route("/show_by_developer", methods=["GET", "POST"])
+def show_by_developer():
+    current_building = request.form.get("current_building2")
+
+    with sqlite3.connect('database.db') as db:
+        cursor = db.cursor()
+        query5 = f""" UPDATE buildings SET AvailableOnMainPage = 1 WHERE name = '{current_building}' """
+        cursor.execute(query5)
+        db.commit()
+
+    with sqlite3.connect('database.db') as db:
+        cursor = db.cursor()
+        query4 = f""" SELECT developer_data.Name FROM developer_data JOIN buildings 
+        ON buildings.DeveloperID = developer_data.DeveloperID 
+        WHERE buildings.Name = '{current_building}' """
+        cursor.execute(query4)
+    title = cursor.fetchone()[0]
+
+    with sqlite3.connect('database.db') as db:
+        cursor = db.cursor()
+        query = f""" SELECT * FROM developer_data WHERE Name = '{title}' """
+        cursor.execute(query)
+    developer = cursor.fetchone()
+    with sqlite3.connect('database.db') as db:
+        cursor = db.cursor()
+        query1 = f""" SELECT buildings.Name, buildings.AvailableOnMainPage, buildings.BlockedByAdmin FROM buildings JOIN developer_data 
+        ON buildings.DeveloperID = developer_data.DeveloperID 
+        WHERE developer_data.Name  = '{title}' """
+        cursor.execute(query1)
+    houses = cursor.fetchall()
+
+    return render_template("developer.html", developer=developer, houses=houses)
+
+@app.route("/hide_by_admin", methods=["GET", "POST"])
+def hide_by_admin():
+    current_building = request.form.get("current_building3")
+
+    with sqlite3.connect('database.db') as db:
+        cursor = db.cursor()
+        query1 = f""" UPDATE buildings SET BlockedByAdmin = 1 WHERE name = '{current_building}' """
+        cursor.execute(query1)
+        db.commit()
+    with sqlite3.connect('database.db') as db:
+        cursor = db.cursor()
+        query = f""" SELECT Name, Email FROM developer_data """
+        cursor.execute(query)
+    developers = cursor.fetchall()
+    buildings_list = []
+    for i in range(len(developers)):
+        with sqlite3.connect('database.db') as db:
+            cursor = db.cursor()
+            query = f""" SELECT buildings.Name, buildings.SubmissionDate, buildings.BlockedByAdmin FROM buildings 
+            JOIN developer_data ON buildings.DeveloperID = developer_data.DeveloperID 
+            WHERE developer_data.Name  = '{developers[i][0]}'"""
+            cursor.execute(query)
+        houses = cursor.fetchall()
+        buildings_list.append([developers[i][0], houses, developers[i][1]])
+    print(buildings_list)
+    return render_template("admin.html", data_list=buildings_list)
+
+
+@app.route("/show_by_admin", methods=["GET", "POST"])
+def show_by_admin():
+    current_building = request.form.get("current_building4")
+    
+    with sqlite3.connect('database.db') as db:
+        cursor = db.cursor()
+        query1 = f""" UPDATE buildings SET BlockedByAdmin = 0 WHERE name = '{current_building}' """
+        cursor.execute(query1)
+        db.commit()
+    with sqlite3.connect('database.db') as db:
+        cursor = db.cursor()
+        query = f""" SELECT Name, Email FROM developer_data """
+        cursor.execute(query)
+    developers = cursor.fetchall()
+    buildings_list = []
+    for i in range(len(developers)):
+        with sqlite3.connect('database.db') as db:
+            cursor = db.cursor()
+            query = f""" SELECT buildings.Name, buildings.SubmissionDate, buildings.BlockedByAdmin FROM buildings 
+            JOIN developer_data ON buildings.DeveloperID = developer_data.DeveloperID 
+            WHERE developer_data.Name  = '{developers[i][0]}'"""
+            cursor.execute(query)
+        houses = cursor.fetchall()
+        buildings_list.append([developers[i][0], houses, developers[i][1]])
+    print(buildings_list)
+    return render_template("admin.html", data_list=buildings_list)
 
 
 if __name__ == "__main__":
