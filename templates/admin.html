@@ -1,5 +1,7 @@
 <link href="/static/index_styles.css" rel="stylesheet">
 <link href="/static/developer_styles.css" rel="stylesheet">
+<link href="/static/popup_add_styles.css" rel="stylesheet">
+<script src="/static/popup_add.js"></script>
 
 
 {% extends "layout_1.html" %}
@@ -11,15 +13,40 @@
 
             <div class="headRow">
                 <h2 class="headColumn1">{{ i[0] }}</h2>
-                <button class="headColumn3" style="margin: 2%; width: 160px"><img src="/static/icons/mail.png" height="40" class="headColumn3">Написати</button>
+                    <button class="headColumn3" style="margin: 2%; width: 160px"><img src="/static/icons/mail.png" height="40" class="headColumn3" onclick="myFunctionMail()">Написати</button>
+                    <div class="popupMail">
+                        <span class="popuptext" id="myPopupMail">
+                            <form>
+                                <p>{{ i[0] }}</p>
+                                <input style="float: center; width: 96%;" name="title" type="text" placeholder="{{ i[2] }}"><br><br>
+                                <textarea rows = "10" cols = "98%" name = "description"></textarea><br><br>
+                                <input type="submit" value="Надіслати">
+                                <input type="submit" value="Вийти">
+                            </form>
+                        </span>
+                    </div>
             </div>
-
 
             {% for j in i[1] %}
             <hr style="width:96%; height:1px; color:#e0e0e0; background-color:#e0e0e0">
                 <div class="headRow">
                     <p class="headColumn1"><b>{{ [j][0][0] }}.</b> Додано: {{ [j][0][1][:10] }} о {{ [j][0][1][11:19] }}</p>
-                    <button class="headColumn3" style="margin: 2%; width: 160px">Заблокувати на сайті</button>
+                    {% if j[2] == 0 %}
+                        <div class="headColumn3" style="margin: 2%; width: 160px">
+                            <form action="/hide_by_admin" method="post">
+                                <input name="current_building3" value="{{ [j][0][0] }}" type="hidden" required>
+                                <input type="submit" value="Заблокувати на сайті">
+                            </form>
+                        </div>
+                    {% endif %}
+                    {% if j[2] == 1 %}
+                        <div class="headColumn3" style="margin: 2%; width: 160px">
+                            <form action="/show_by_admin" method="post">
+                                <input name="current_building4" value="{{ [j][0][0] }}" type="hidden" required>
+                                <input type="submit" value="Розблокувати">
+                            </form>
+                        </div>
+                    {% endif %}
                 </div>
             {% endfor %}
 
