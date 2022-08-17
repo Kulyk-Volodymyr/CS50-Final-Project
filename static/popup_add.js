@@ -18,3 +18,8 @@ function myFunctionSearch() {
     var popup = document.getElementById("myPopupSearch");
     popup.classList.toggle("show", 1);
 };
+
+function myFunctionMail() {
+    var popup = document.getElementById("myPopupMail");
+    popup.classList.toggle("show");
+};
